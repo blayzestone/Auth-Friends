@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
+  Spinner,
   Button,
   Form,
   FormGroup,
@@ -8,16 +9,22 @@ import {
   Input,
 } from "reactstrap";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { useForm } from "../hooks/useForm";
 
 const LoginForm = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [formValues, setFormValues] = useForm({
+    username: "",
+    password: "",
+  });
+
   const SubmitHandler = (evt) => {
     evt.preventDefault();
+    setIsLoading(true);
     axiosWithAuth()
-      .post("/api/login", {
-        username: "Lambda School",
-        password: "i<3Lambd4",
-      })
+      .post("/api/login", formValues)
       .then((res) => {
+        setIsLoading(false);
         localStorage.setItem("token", res.data.payload);
         props.history.push("/protected");
       });
@@ -27,13 +34,13 @@ const LoginForm = (props) => {
     <Form onSubmit={SubmitHandler}>
       <FormGroup>
         <Label for="username">Username</Label>
-        <Input id="username" name="username" />
+        <Input onChange={setFormValues} id="username" name="username" />
       </FormGroup>
       <FormGroup>
         <Label for="password">password</Label>
-        <Input id="password" name="password" />
+        <Input onChange={setFormValues} id="password" name="password" />
       </FormGroup>
-      <Button>Log in</Button>
+      <Button>{isLoading ? <Spinner /> : "Log in"}</Button>
     </Form>
   );
 };

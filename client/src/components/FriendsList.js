@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
-import { Spinner } from "reactstrap";
+import { Spinner, Card, CardTitle, CardText } from "reactstrap";
 import CreateFriendForm from "./CreateFriendForm";
 
 const FriendsList = () => {
@@ -21,17 +21,19 @@ const FriendsList = () => {
   return (
     <>
       <CreateFriendForm updateFriends={updateFriends} />
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        friends.map((friend) => (
-          <div key={friend.id}>
-            <h2>{friend.name}</h2>
-            <p>{friend.email}</p>
-            <p>{friend.age}</p>
-          </div>
-        ))
-      )}
+      <div className="w-100 d-flex justify-content-center align-content-center flex-wrap p-5">
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          friends.map((friend) => (
+            <Card key={friend.id} className="w-25 p-3 m-1">
+              <CardTitle>{friend.name}</CardTitle>
+              <CardText>{friend.email}</CardText>
+              <CardText>{friend.age}</CardText>
+            </Card>
+          ))
+        )}
+      </div>
     </>
   );
 };

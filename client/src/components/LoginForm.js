@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Spinner, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { useForm } from "../hooks/useForm";
+import FormContainer from "./StyledForm";
 
 const LoginForm = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,17 +28,21 @@ const LoginForm = (props) => {
   };
 
   return (
-    <Form onSubmit={SubmitHandler}>
-      <FormGroup>
-        <Label for="username">Username</Label>
-        <Input onChange={setFormValues} id="username" name="username" />
-      </FormGroup>
-      <FormGroup>
-        <Label for="password">password</Label>
-        <Input onChange={setFormValues} id="password" name="password" />
-      </FormGroup>
-      <Button>{isLoading ? <Spinner /> : "Log in"}</Button>
-    </Form>
+    <div style={{ height: "100vh" }} className="d-flex justify-content-center">
+      <FormContainer>
+        <Form onSubmit={SubmitHandler}>
+          <FormGroup>
+            <Label for="username">Username</Label>
+            <Input onChange={setFormValues} id="username" name="username" />
+          </FormGroup>
+          <FormGroup>
+            <Label for="password">password</Label>
+            <Input onChange={setFormValues} id="password" name="password" />
+          </FormGroup>
+          <Button>{isLoading ? <Spinner /> : "Log in"}</Button>
+        </Form>
+      </FormContainer>
+    </div>
   );
 };
 

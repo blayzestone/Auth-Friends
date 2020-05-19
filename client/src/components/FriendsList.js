@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { Spinner } from "reactstrap";
+import CreateFriendForm from "./CreateFriendForm";
 
 const FriendsList = () => {
   const [friends, setFriends] = useState([]);
@@ -15,8 +16,11 @@ const FriendsList = () => {
       });
   }, []);
 
+  const updateFriends = (friends) => setFriends(friends);
+
   return (
     <>
+      <CreateFriendForm updateFriends={updateFriends} />
       {isLoading ? (
         <Spinner />
       ) : (

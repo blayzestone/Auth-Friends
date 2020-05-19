@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Spinner,
-  Button,
-  Form,
-  FormGroup,
-  FormFeedback,
-  Label,
-  Input,
-} from "reactstrap";
+import { Spinner, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { useForm } from "../hooks/useForm";
 
@@ -27,6 +19,10 @@ const LoginForm = (props) => {
         setIsLoading(false);
         localStorage.setItem("token", res.data.payload);
         props.history.push("/protected");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err.response.data.error);
       });
   };
 
